@@ -6,21 +6,26 @@ import PackageDescription
 let package = Package(
     name: "FrameLint",
     products: [
-        .executable(name: "FrameLint", targets: ["cli"])
+        .executable(name: "FrameLint", targets: ["FrameLintCli"]),
+        .library(name: "FrameLintLib", type: .static, targets: ["FrameLint"])
     ],
     dependencies: [
-         .package(url: "https://github.com/apple/swift-tools-support-core.git", from: "0.1.3"),
-         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.0.6")
+        // .package(url: "https://github.com/apple/swift-tools-support-core.git", from: "0.1.3"),
+         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.0.6"),
+        .package(url: "https://github.com/sunlubo/SwiftFFmpeg.git", from: "1.0.0")
     ],
     targets: [
         .target(
-            name: "libFrameLint",
+            name: "FrameLint",
             dependencies: []),
         .target(
-            name: "cli",
-            dependencies: ["libFrameLint", .product(name: "ArgumentParser", package: "swift-argument-parser"), .product(name: "SwiftToolsSupport", package: "swift-tools-support-core")]),
+            name: "FrameLintCli",
+            dependencies: ["FrameLint",
+                           "SwiftFFmpeg",
+                           .product(name: "ArgumentParser", package: "swift-argument-parser")
+                          ]),
         .testTarget(
             name: "FrameLintTests",
-            dependencies: ["libFrameLint"]),
+            dependencies: ["FrameLint"]),
     ]
 )
