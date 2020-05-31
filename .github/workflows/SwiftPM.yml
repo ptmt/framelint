@@ -26,6 +26,8 @@ jobs:
           build-${{ github.workspace }}-${{ runner.os }}-
           build-${{ github.workspace }}-
     - uses: YOCKOW/Action-setup-swift@master
+      with:
+        swift-version: '5.2.2'
     - name: Build
       run: swift build -v
     - name: Run tests
